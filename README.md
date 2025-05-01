@@ -1,6 +1,6 @@
 # Django Signal Manager Framework
 
-This package provides a base class, `SignalManager`, for simplifying the handling of Django model signals. It streamlines the process of responding to `pre_save`, `post_save`, `pre_delete`, and `post_delete` signals by categorizing them into more specific methods.
+This package provides a base class, `SignalManager`, for simplifying the managing of Django model signals. It streamlines the process of responding to `pre_save`, `post_save`, `pre_delete`, and `post_delete` signals by categorizing them into more specific methods.
 
 ## Installation
 
@@ -23,27 +23,27 @@ from your_app.models import MyModel
 logger = logging.getLogger(__name__)
 
 class MyModelSignalManager(SignalManager):
-    def pre_create(self, instance: Model, **kwargs: Any) -> None:
+    def on_pre_create(self, instance: Model, **kwargs: Any) -> None:
         logger.info(f"Pre-create: {instance}")
         # Add your logic here
 
-    def post_create(self, instance: Model, **kwargs: Any) -> None:
+    def on_post_create(self, instance: Model, **kwargs: Any) -> None:
         logger.info(f"Post-create: {instance}")
         # Add your logic here
 
-    def pre_update(self, instance: Model, **kwargs: Any) -> None:
+    def on_pre_update(self, instance: Model, **kwargs: Any) -> None:
         logger.info(f"Pre-update: {instance}")
         # Add your logic here
 
-    def post_update(self, instance: Model, **kwargs: Any) -> None:
+    def on_post_update(self, instance: Model, **kwargs: Any) -> None:
         logger.info(f"Post-update: {instance}")
         # Add your logic here
 
-    def pre_delete(self, instance: Model, **kwargs: Any) -> None:
+    def on_pre_delete(self, instance: Model, **kwargs: Any) -> None:
         logger.info(f"Pre-delete: {instance}")
         # Add your logic here
 
-    def post_delete(self, instance: Model, **kwargs: Any) -> None:
+    def on_post_delete(self, instance: Model, **kwargs: Any) -> None:
         logger.info(f"Post-delete: {instance}")
         # Add your logic here
 ```
@@ -71,24 +71,24 @@ def my_model_signals(sender, instance, **kwargs):
 ### `SignalManager`
 
 - **`run(sender: type, instance: Model, **kwargs: Any) -> None`**: 
-  - Determines the signal type and dispatches to the appropriate handler method.
-- **`pre_create(instance: Model, **kwargs: Any) -> None`**: 
-  - Handler for `pre_save` when a new instance is being created.
-- **`post_create(instance: Model, **kwargs: Any) -> None`**: 
-  - Handler for `post_save` when a new instance is created.
-- **`pre_update(instance: Model, **kwargs: Any) -> None`**: 
-  - Handler for `pre_save` when an existing instance is being updated.
-- **`post_update(instance: Model, **kwargs: Any) -> None`**: 
-  - Handler for `post_save` when an existing instance is updated.
-- **`pre_delete(instance: Model, **kwargs: Any) -> None`**: 
-  - Handler for `pre_delete`.
-- **`post_delete(instance: Model, **kwargs: Any) -> None`**: 
-  - Handler for `post_delete`.
+  - Determines the signal type and dispatches to the appropriate manager method.
+- **`on_pre_create(instance: Model, **kwargs: Any) -> None`**: 
+  - manager for `pre_save` when a new instance is being created.
+- **`on_post_create(instance: Model, **kwargs: Any) -> None`**: 
+  - manager for `post_save` when a new instance is created.
+- **`on_pre_update(instance: Model, **kwargs: Any) -> None`**: 
+  - manager for `pre_save` when an existing instance is being updated.
+- **`on_post_update(instance: Model, **kwargs: Any) -> None`**: 
+  - manager for `post_save` when an existing instance is updated.
+- **`on_pre_delete(instance: Model, **kwargs: Any) -> None`**: 
+  - manager for `pre_delete`.
+- **`on_post_delete(instance: Model, **kwargs: Any) -> None`**: 
+  - manager for `post_delete`.
 
 ## Benefits
 
-- **Organization**: Separates signal handling logic into distinct methods, improving code readability and maintainability.
-- **Clarity**: Makes it clear which signal is being handled (create vs. update).
+- **Organization**: Separates signal managing logic into distinct methods, improving code readability and maintainability.
+- **Clarity**: Makes it clear which signal is being managed (create vs. update).
 - **Reusability**: The base class can be extended for different models, reducing code duplication.
 - **Logging**: Includes basic logging for unknown or missing signals.
 
